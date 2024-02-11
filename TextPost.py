@@ -1,5 +1,8 @@
+from Post import Post
+from User import User
 
-class TextPost(object):
-    def __init__(self, post_type, text):
-        self.post_type = post_type
+
+class TextPost(Post):
+    def __init__(self, user: "User",  post_type, text):
+        super().__init__(user, post_type)
         self.text = text

@@ -1,4 +1,6 @@
 from User import User
+
+
 class SocialNetwork:
 
     def __init__(self, name):
@@ -11,8 +13,3 @@ class SocialNetwork:
 
         if u1.username not in self.users:
             self.users[u1.username] = u1
-
-
-
-
-
