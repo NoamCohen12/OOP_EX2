@@ -91,7 +91,7 @@ def main():
     print(p2)
 
     # Printing all notifications received by a certain user
-    u4.print_notifications()
+    # u4.print_notifications()
     print()
 
     # Network printing

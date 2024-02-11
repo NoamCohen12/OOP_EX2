@@ -13,3 +13,10 @@ class SocialNetwork:
 
         if u1.username not in self.users:
             self.users[u1.username] = u1
+
+    def log_in(self, username, password):
+        if username in self.users and self.users[username].password == password:
+            print(f"{username} connect")
+
+    def log_out(self, username):
+        print(f"{username} disconnect")
