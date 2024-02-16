@@ -7,7 +7,7 @@ def main():
     print(network.name)
     network1 = SocialNetwork("ido hgever")
     print(network1.name)
-    print(network1 is network )
+    print(network1 is network)
     print()
 
     # Creating users

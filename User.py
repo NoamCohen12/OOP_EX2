@@ -22,6 +22,8 @@ class User(Observer):
         self.followers = set()
         self.posts = []
         self.notifications = []
+        self.is_online = False
+
 
     def follow(self, u1: "User"):
         # because it's set we don't need to check if the followers was in the set
@@ -46,20 +48,20 @@ class User(Observer):
             post_t = TextPost(self, args[0], args[1])
             self.posts.append(post_t)
             print(f'{self.username} published a post:\n"{args[1]}"\n')
-            self.update(f"{self.username} has a new post")
+            post_t.notification_update(post_t.post_owner, "post")
             return post_t
         elif args[0] == "Image":
             post_img = ImagePost(self, args[0], args[1])
             self.posts.append(post_img)
             print(f"{self.username} posted a picture\n")
-            self.update(f"{self.username} has a new post")
+            post_img.notification_update(post_img.post_owner, "post")
             return post_img
         elif args[0] == "Sale":
             post_sale = SalePost(self, args[0], args[1], args[2], args[3])
             self.posts.append(post_sale)
             print(f"{self.username} posted a product for sale:\n"
                   f"{post_sale.status} {args[1]}, price: {args[2]}, pickup from: {args[3]}\n")
-            self.update(f"{self.username} has a new post")
+            post_sale.notification_update(post_sale.post_owner, "post")
             return post_sale
 
     def print_notifications(self):
@@ -67,7 +69,7 @@ class User(Observer):
         result = "\n".join(self.notifications)
         print(f"{self.username}'s notifications:\n{result}")
 
-    def update(self, new_notification):
+    def update(self, new_notification: str):
         for follower in self.followers:
             follower.notifications.append(new_notification)
 
