@@ -23,8 +23,10 @@ class Post:
     def notification_update(self, user, type_of_notification: str):
         """
         This function implements observer design pattern like "Subject"
-        it is responsible for updating all the "observers" Only likes and comments
-        in our case the observ is the user who liked him
+        it is responsible for updating all the "observers" likes and comments and a new post
+        we have different case :
+        first someone liked or commented on user post than he gets notification on it
+        second user create a new post than the function send notification to all his followers.
         """
 
         if self.post_owner.username != user.username:  # if I am the "post owner" i dont want to upadte myself
@@ -37,15 +39,26 @@ class Post:
 
 
 class TextPost(Post):
+    """
+        Represents a text-based post on a social networking platform.
+        Subclass of Post.
+        """
     def __init__(self, post_owner, post_type, text):
         super().__init__(post_owner, post_type)
         self.text = text
 
     def __str__(self):
+        """
+         Return a string representation of the TextPost instance.
+         """
         return f'{self.post_owner.username} published a post:\n"{self.text}"\n'
 
 
 class SalePost(Post):
+    """
+      Represents a post for selling items on a social networking platform.
+      Subclass of Post.
+      """
     def __init__(self, post_owner, post_type, description, price, location):
         super().__init__(post_owner, post_type)
         self.description = description
@@ -64,20 +77,29 @@ class SalePost(Post):
             print(f"{self.post_owner.username} product is sold")
 
     def __str__(self):
+        """
+        Return a string representation of the SalePost instance.
+        """
         return (f"{self.post_owner.username} posted a product for sale:\n"
                 f"{self.status} {self.description},price: {self.price},pickup from: {self.location}")
 
 
 class ImagePost(Post):
+    """
+       Represents an image-based post on a social networking platform.
+       Subclass of Post.
+       """
     def __init__(self, post_owner, post_type, image_path):
         super().__init__(post_owner, post_type)
         self.image_path = image_path
 
     def display(self):
-        pass
         img = image.imread(self.image_path)
         plt.imshow(img)
         plt.show()
 
     def __str__(self):
+        """
+         Return a string representation of the ImagePost instance.
+          """
         return f"{self.post_owner.username} published a picture\n"

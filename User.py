@@ -24,7 +24,6 @@ class User(Observer):
         self.notifications = []
         self.is_online = False
 
-
     def follow(self, u1: "User"):
         # because it's set we don't need to check if the followers was in the set
         u1.followers.add(self)
@@ -37,12 +36,8 @@ class User(Observer):
 
     def publish_post(self, *args):  # Factory method pattern
         """
-         This function implements *observer design pattern* like "Subject" by : update function.
-         it is responsible for updating all the "observers" about a new post.
-         in our case the observers are the all users that following after post owner.
-
          This function implements *factory design pattern* the user put a parameters
-         and the function responsible to create post by user wishes like factory
+         and the function responsible to create post by user wishes (*args)like factory
          """
         if args[0] == "Text":
             post_t = TextPost(self, args[0], args[1])
@@ -65,15 +60,25 @@ class User(Observer):
             return post_sale
 
     def print_notifications(self):
-        # for i in self.notifications:
+        """
+       Print notifications received by the user.
+         """
         result = "\n".join(self.notifications)
         print(f"{self.username}'s notifications:\n{result}")
 
     def update(self, new_notification: str):
+        """
+         Update method called by subjects to notify this user of new notifications.
+          Parameters:
+          new_notification (str): The new notification received.
+          """
         for follower in self.followers:
             follower.notifications.append(new_notification)
 
     def __str__(self):
-        all_users = (f"User name: {self.username}, Number of posts: {len(self.posts)},"
-                     f" Number of followers: {len(self.followers)}")
-        return all_users
+        """
+         Return a string representation of the User instance.
+        """
+        user_description = (f"User name: {self.username}, Number of posts: {len(self.posts)},"
+                            f" Number of followers: {len(self.followers)}")
+        return user_description
