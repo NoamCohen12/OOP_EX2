@@ -12,15 +12,18 @@ class Post:
 
     def like(self, u1):
         # user can't like himself post
-        if self.post_owner != u1:
+        if u1.is_online:
             self.likes_list.add(u1)
-            self.notification_update(u1, "like")
+            if self.post_owner != u1:
+                self.notification_update(u1, "like")
 
     def comment(self, u2, text: "comment"):
-        self.comment_list[u2] = text
-        self.notification_update(u2, "comment")
+        if u2.is_online:
+            self.comment_list[u2] = text
+            if self.post_owner != u2:
+                self.notification_update(u2, "comment", text)
 
-    def notification_update(self, user, type_of_notification: str):
+    def notification_update(self, user, *args):
         """
         This function implements observer design pattern like "Subject"
         it is responsible for updating all the "observers" likes and comments and a new post
@@ -29,12 +32,14 @@ class Post:
         second user create a new post than the function send notification to all his followers.
         """
 
-        if self.post_owner.username != user.username:  # if I am the "post owner" i dont want to upadte myself
-            if type_of_notification == "like":
+        if self.post_owner.username != user.username:  # if I am the "post owner" I don't want to update myself
+            if args[0] == "like":
+                print(f"notification to {self.post_owner.username}: {user.username} liked your post")
                 self.post_owner.notifications.append(f"{user.username} liked your post")
-            if type_of_notification == "comment":
+            if args[0] == "comment":
                 self.post_owner.notifications.append(f"{user.username} commented on your post")
-        if type_of_notification == "post":
+                print(f"notification to {self.post_owner.username}: {user.username} commented on your post: {args[1]}")
+        if args[0] == "post":
             user.update(f"{self.post_owner.username} has a new post")
 
 
@@ -81,7 +86,7 @@ class SalePost(Post):
         Return a string representation of the SalePost instance.
         """
         return (f"{self.post_owner.username} posted a product for sale:\n"
-                f"{self.status} {self.description},price: {self.price},pickup from: {self.location}")
+                f"{self.status} {self.description},price: {self.price},pickup from: {self.location}\n")
 
 
 class ImagePost(Post):
@@ -97,6 +102,7 @@ class ImagePost(Post):
         img = image.imread(self.image_path)
         plt.imshow(img)
         plt.show()
+        print("Shows picture")
 
     def __str__(self):
         """

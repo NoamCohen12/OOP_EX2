@@ -27,25 +27,24 @@ class SocialNetwork:  # Singleton Design Pattern
         print(f"The social network {self.name} was created!")
 
     def sign_up(self, username, password):
-        u1 = User(username, password)
-
-        if u1.username not in self.users:
-            self.users[u1.username] = u1
-            u1.is_online = True
-            return u1
+        if 8 > len(password) > 4:
+            u1 = User(username, password)
+            if u1.username not in self.users:
+                self.users[u1.username] = u1
+                u1.is_online = True
+                return u1
 
     # ---------------------------------------------------------------------------------------------
     def log_in(self, username, password):
         if username in self.users and self.users[username].password == password:
+            self.users[username].is_online = True
             print(f"{username} connect")
 
     # ---------------------------------------------------------------------------------------------
     def log_out(self, username):
-        for user in self.users.values():
-            if user.username == username:
-                user.is_online = False
-                print(f"{username} disconnect")
-                return
+        if username in self.users:
+            self.users[username].is_online = False
+            print(f"{username} disconnect")
     # ---------------------------------------------------------------------------------------------
 
     def __str__(self):
