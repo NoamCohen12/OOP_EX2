@@ -5,9 +5,6 @@ from User import User
  during the entire run only one instance will be created.
  thanks to the flags "__instance" and "__is_init".
  also The conditions on the creation functions :"__new__" and "__init__" of the SocialNetwork.
- 
- 
-         
 """
 
 
@@ -34,19 +31,28 @@ class SocialNetwork:  # Singleton Design Pattern
 
         if u1.username not in self.users:
             self.users[u1.username] = u1
+            u1.is_online = True
             return u1
 
+    # ---------------------------------------------------------------------------------------------
     def log_in(self, username, password):
         if username in self.users and self.users[username].password == password:
             print(f"{username} connect")
 
+    # ---------------------------------------------------------------------------------------------
     def log_out(self, username):
-        print(f"{username} disconnect")
+        for user in self.users.values():
+            if user.username == username:
+                user.is_online = False
+                print(f"{username} disconnect")
+                return
+    # ---------------------------------------------------------------------------------------------
 
     def __str__(self):
+        """
+        Return a string representation of the SocialNetwork instance.
+         """
         all_users = ""
         for user in self.users.values():
             all_users += str(user) + "\n"
-
         return f"{self.name} social network:\n{all_users}"
-        # return user.__str__()
