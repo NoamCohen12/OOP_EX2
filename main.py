@@ -4,10 +4,6 @@ from SocialNetwork import SocialNetwork
 def main():
     # Creating the network
     network = SocialNetwork("Twitter")
-    #   print(network.name)
-    #  network1 = SocialNetwork("ido hgever")
-    # print(network1.name)
-    #   print(network1 is network)
     print()
 
     # Creating users
@@ -24,8 +20,8 @@ def main():
     u2.follow(u1)
     u3.follow(u1)
     u3.follow(u2)
-    u4.follow(u3)  # charlie
-    u4.follow(u1)  # alice
+    u4.follow(u3)
+    u4.follow(u1)
     u5.follow(u2)
     u5.follow(u4)
     print()
