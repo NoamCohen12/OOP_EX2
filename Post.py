@@ -1,4 +1,4 @@
-# matplotlib.pyplot as plt
+# from matplotlib import image as plt
 from matplotlib import image, pyplot as plt
 
 
@@ -79,14 +79,14 @@ class SalePost(Post):
     def sold(self, password: str):
         if password == self.post_owner.password:
             self.status = "Sold!"
-            print(f"{self.post_owner.username} product is sold")
+            print(f"{self.post_owner.username}'s product is sold")
 
     def __str__(self):
         """
         Return a string representation of the SalePost instance.
         """
         return (f"{self.post_owner.username} posted a product for sale:\n"
-                f"{self.status} {self.description},price: {self.price},pickup from: {self.location}\n")
+                f"{self.status} {self.description}, price: {self.price}, pickup from: {self.location}\n")
 
 
 class ImagePost(Post):
@@ -108,4 +108,4 @@ class ImagePost(Post):
         """
          Return a string representation of the ImagePost instance.
           """
-        return f"{self.post_owner.username} published a picture\n"
+        return f"{self.post_owner.username} posted a picture\n"
