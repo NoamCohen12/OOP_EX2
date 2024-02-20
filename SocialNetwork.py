@@ -34,7 +34,7 @@ class SocialNetwork:  # Singleton Design Pattern
                 u1.is_online = True
                 return u1
         else:
-            raise print("illegal password")
+            raise print("Illegal password")
 
     # ---------------------------------------------------------------------------------------------
     def log_in(self, username, password):
