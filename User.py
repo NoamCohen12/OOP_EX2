@@ -29,12 +29,16 @@ class User(Observer):
         if self.is_online:
             u1.followers.add(self)
             print(f"{self.username} started following {u1.username}")
+        else:
+            raise RuntimeError(f"The user {u1.username} is not online")
 
     def unfollow(self, u1: "User"):
         # because it's set we don't need to check if the followers was in the set
         if self.is_online:
             u1.followers.remove(self)
             print(f"{self.username} unfollowed {u1.username}")
+        else:
+            raise RuntimeError(f"The user: {u1.username} is not online")
 
     def publish_post(self, *args):  # Factory method pattern
         """
@@ -61,6 +65,8 @@ class User(Observer):
                     f"{post_sale.status} {args[1]}, price: {args[2]}, pickup from: {args[3]}\n")
                 post_sale.notification_update(post_sale.post_owner, "post")
                 return post_sale
+        else:
+            raise RuntimeError(f"The user: {self.username} is not online")
 
     def print_notifications(self):
         """
