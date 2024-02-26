@@ -33,8 +33,10 @@ class SocialNetwork:  # Singleton Design Pattern
                 self.users[u1.username] = u1
                 u1.is_online = True
                 return u1
+            else:
+                raise RuntimeError("Username already exist")
         else:
-            raise print("Illegal password")
+            raise RuntimeError("Illegal password")
 
     # ---------------------------------------------------------------------------------------------
     def log_in(self, username, password):
@@ -44,9 +46,11 @@ class SocialNetwork:  # Singleton Design Pattern
 
     # ---------------------------------------------------------------------------------------------
     def log_out(self, username):
-        if username in self.users:
+        if username in self.users and self.users[username].is_online:
             self.users[username].is_online = False
             print(f"{username} disconnected")
+        else:
+            raise RuntimeError(f"The user: {username} is not online")
 
     # ---------------------------------------------------------------------------------------------
 

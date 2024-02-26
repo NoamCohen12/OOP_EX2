@@ -16,12 +16,16 @@ class Post:
             self.likes_list.add(u1)
             if self.post_owner != u1:
                 self.notification_update(u1, "like")
+        else:
+            raise RuntimeError(f"The user: {u1.username} is not online")
 
     def comment(self, u2, text: "comment"):
         if u2.is_online:
             self.comment_list[u2] = text
             if self.post_owner != u2:
                 self.notification_update(u2, "comment", text)
+        else:
+            raise RuntimeError(f"The user: {u2.username} is not online")
 
     def notification_update(self, user, *args):
         """
